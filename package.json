@@ -1,0 +1,50 @@
+{
+  "name": "pfx",
+  "version": "0.0.0",
+  "description": "Browser vendor prefix helper",
+  "license": "MIT",
+  "repository": "awcross/pfx",
+  "author": {
+    "name": "Alex Cross",
+    "email": "crossaw@gmail.com",
+    "url": "alexcross.io"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "bundle": "babel --presets=es2015 index.js > dist/pfx.js",
+    "test": "browserify test.js | tape-run"
+  },
+  "files": [
+    "dist/pfx.js"
+  ],
+  "keywords": [
+    "prefix",
+    "prefixes",
+    "css",
+    "css3",
+    "vendor",
+    "webkit",
+    "moz",
+    "ms"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "browserify": "^13.3.0",
+    "tape": "^4.6.3",
+    "tape-run": "^2.1.5",
+    "xo": "^0.17.1"
+  },
+  "xo": {
+    "esnext": true,
+    "envs": [
+      "browser",
+      "es6"
+    ],
+    "rules": {
+      "padded-blocks": 0
+    }
+  }
+}
