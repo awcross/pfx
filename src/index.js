@@ -3,6 +3,12 @@
 function pfx(prop, elem, fn) {
 	let prefixes = 'Webkit Moz O ms'.split(' ');
 
+	if (prop.indexOf('-') !== -1) {
+		prop = prop.replace(/([a-z])-([a-z])/g, (str, m1, m2) => {
+			return m1 + m2.toUpperCase();
+		}).replace(/^-/, '');
+	}
+
 	const ucProp = prop[0].toUpperCase() + prop.slice(1);
 	const testProp = elem === undefined || typeof elem === 'string';
 
@@ -16,13 +22,7 @@ function pfx(prop, elem, fn) {
 		const el = document.createElement('div');
 
 		for (let i = 0, j = props.length; i < j; i++) {
-			let name = props[i];
-
-			if (name.indexOf('-') !== -1) {
-				name = name.replace(/([a-z])-([a-z])/g, (str, m1, m2) => {
-					return m1 + m2.toUpperCase();
-				}).replace(/^-/, '');
-			}
+			const name = props[i];
 
 			if (el.style[name] !== undefined) {
 				return name;

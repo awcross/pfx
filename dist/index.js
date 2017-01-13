@@ -5,6 +5,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 function pfx(prop, elem, fn) {
 	var prefixes = 'Webkit Moz O ms'.split(' ');
 
+	if (prop.indexOf('-') !== -1) {
+		prop = prop.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
+			return m1 + m2.toUpperCase();
+		}).replace(/^-/, '');
+	}
+
 	var ucProp = prop[0].toUpperCase() + prop.slice(1);
 	var testProp = elem === undefined || typeof elem === 'string';
 
@@ -19,12 +25,6 @@ function pfx(prop, elem, fn) {
 
 		for (var i = 0, j = props.length; i < j; i++) {
 			var name = props[i];
-
-			if (name.indexOf('-') !== -1) {
-				name = name.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
-					return m1 + m2.toUpperCase();
-				}).replace(/^-/, '');
-			}
 
 			if (el.style[name] !== undefined) {
 				return name;
