@@ -13,13 +13,10 @@
     "node": ">=4"
   },
   "scripts": {
-    "bundle": "babel --presets=es2015 index.js > dist/pfx.js",
+    "bundle": "babel --presets=es2015 src/index.js > dist/index.js",
     "test": "browserify test.js | tape-run"
   },
-  "main": "dist/pfx.js",
-  "files": [
-    "index.js"
-  ],
+  "main": "dist/index.js",
   "keywords": [
     "prefix",
     "prefixes",

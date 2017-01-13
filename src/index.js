@@ -39,7 +39,11 @@ function pfx(prop, elem, fn) {
 				const item = elem[props[key]];
 
 				if (typeof item === 'function') {
-					return () => item.apply(elem, arguments);
+					const obj = typeof fn === 'object' ? fn : elem;
+
+					return function () {
+						return item.apply(obj, arguments);
+					};
 				}
 
 				return item;

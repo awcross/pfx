@@ -3,8 +3,6 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function pfx(prop, elem, fn) {
-	var _arguments = arguments;
-
 	var prefixes = 'Webkit Moz O ms'.split(' ');
 
 	var ucProp = prop[0].toUpperCase() + prop.slice(1);
@@ -45,11 +43,19 @@ function pfx(prop, elem, fn) {
 					var item = elem[props[key]];
 
 					if (typeof item === 'function') {
-						return {
-							v: function v() {
-								return item.apply(elem, _arguments);
-							}
-						};
+						var _ret2 = function () {
+							var obj = (typeof fn === 'undefined' ? 'undefined' : _typeof(fn)) === 'object' ? fn : elem;
+
+							return {
+								v: {
+									v: function v() {
+										return item.apply(obj, arguments);
+									}
+								}
+							};
+						}();
+
+						if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
 					}
 
 					return {
