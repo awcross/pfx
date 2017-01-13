@@ -16,8 +16,9 @@
     "bundle": "babel --presets=es2015 index.js > dist/pfx.js",
     "test": "browserify test.js | tape-run"
   },
+  "main": "dist/pfx.js",
   "files": [
-    "dist/pfx.js"
+    "index.js"
   ],
   "keywords": [
     "prefix",
