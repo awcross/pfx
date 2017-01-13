@@ -24,7 +24,7 @@ const transition = pfx('transition');
 // transition === 'MozTransition' in old Firefox
 ```
 
-By default, the property is checked against a DOM element. If you want to check again a different element, pass it in as the second argument.
+By default, the property is checked against a DOM element. If you want to check against a different element, pass it in as the second argument.
 
 ```js
 const rAF = pfx('requestAnimationFrame', window);
