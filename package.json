@@ -1,6 +1,6 @@
 {
   "name": "pfx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Browser vendor prefix helper",
   "license": "MIT",
   "repository": "awcross/pfx",
