@@ -2,8 +2,12 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var prefixes = 'Webkit Moz O ms'.split(' ');
+
 function pfx(prop, elem, fn) {
-	var prefixes = 'Webkit Moz O ms'.split(' ');
+	if (prop.indexOf('@') !== -1) {
+		return atRule(prop);
+	}
 
 	if (prop.indexOf('-') !== -1) {
 		prop = prop.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
@@ -71,7 +75,34 @@ function pfx(prop, elem, fn) {
 	return false;
 }
 
+function atRule(prop) {
+	var cssrule = window.CSSRule;
+
+	if (cssrule === undefined) {
+		return undefined;
+	}
+
+	prop = prop.replace(/^@/, '');
+	var rule = prop.replace(/-/g, '_').toUpperCase() + '_RULE';
+
+	if (rule in cssrule) {
+		return '@' + prop;
+	}
+
+	for (var i = prefixes.length; i--;) {
+		var prefix = prefixes[i];
+		var pfxrule = prefix.toUpperCase() + '_' + rule;
+
+		if (pfxrule in cssrule) {
+			return '@-' + prefix.toLowerCase() + '-' + prop;
+		}
+	}
+
+	return false;
+}
+
 module.exports = pfx;
+module.exports.at = atRule;
 
 module.exports.css = function (prop) {
 	var name = pfx(prop, 'css');

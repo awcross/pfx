@@ -28,3 +28,9 @@ test('dom object', t => {
 	t.equal(typeof m('unicorns', window, true), 'boolean');
 	t.end();
 });
+
+test('at rule', t => {
+	t.equal(m('@font-face'), '@font-face');
+	t.equal(m('@document'), false);
+	t.end();
+});

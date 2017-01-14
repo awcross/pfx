@@ -1,7 +1,11 @@
 'use strict';
 
+let prefixes = 'Webkit Moz O ms'.split(' ');
+
 function pfx(prop, elem, fn) {
-	let prefixes = 'Webkit Moz O ms'.split(' ');
+	if (prop.indexOf('@') !== -1) {
+		return atRule(prop);
+	}
 
 	if (prop.indexOf('-') !== -1) {
 		prop = prop.replace(/([a-z])-([a-z])/g, (str, m1, m2) => {
@@ -54,7 +58,34 @@ function pfx(prop, elem, fn) {
 	return false;
 }
 
+function atRule(prop) {
+	const cssrule = window.CSSRule;
+
+	if (cssrule === undefined) {
+		return undefined;
+	}
+
+	prop = prop.replace(/^@/, '');
+	const rule = prop.replace(/-/g, '_').toUpperCase() + '_RULE';
+
+	if (rule in cssrule) {
+		return `@${prop}`;
+	}
+
+	for (let i = prefixes.length; i--;) {
+		const prefix = prefixes[i];
+		const pfxrule = `${prefix.toUpperCase()}_${rule}`;
+
+		if (pfxrule in cssrule) {
+			return `@-${prefix.toLowerCase()}-${prop}`;
+		}
+	}
+
+	return false;
+}
+
 module.exports = pfx;
+module.exports.at = atRule;
 
 module.exports.css = prop => {
 	let name = pfx(prop, 'css');
